@@ -1,0 +1,17 @@
+{
+  "name": "Maurice",
+  "age": 32,
+  "gender": "male",
+  "location": "Willow Creek",
+  "occupation": "bookstore owner",
+  "personality": {
+    "traits": ["introverted", "thoughtful", "curious"],
+    "likes": ["poetry", "quiet mornings", "old maps"],
+    "dislikes": ["loud crowds", "small talk"]
+  },
+  "beliefs": [
+    "Reading is essential for personal growth.",
+    "People reveal themselves through their routines.",
+    "Every place has a story to tell."
+  ]
+}

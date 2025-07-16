@@ -1,0 +1,17 @@
+{
+  "name": "Julian",
+  "age": 56,
+  "gender": "male",
+  "location": "Dark Grove",
+  "occupation": "high level executive",
+  "personality": {
+    "traits": ["extroverted", "narsasistic", "tempermental"],
+    "likes": ["work", "quiet mornings", "cars"],
+    "dislikes": ["traffic", "small talk"]
+  },
+  "beliefs": [
+    "Reading is essential for personal growth.",
+    "People reveal themselves through their routines.",
+    "Every place has a story to tell."
+  ]
+}
