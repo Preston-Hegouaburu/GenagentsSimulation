@@ -1,13 +1,13 @@
 import requests
 import json
-import time
 import os
+from agent import Agent
 
 def ask(prompt: str):
     response = requests.post(
         url="https://openrouter.ai/api/v1/chat/completions",
         headers={
-            "Authorization": "Bearer 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",
+            "Authorization": "Bearer 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",
             ##"HTTP-Referer": "<YOUR_SITE_URL>",  # Optional
             ##"X-Title": "<YOUR_SITE_NAME>",      # Optional
             "Content-Type": "application/json"
@@ -32,46 +32,32 @@ def ask(prompt: str):
         print(f"Request failed with status code {response.status_code}")
         print(response.text)
 
-SIMULATION_START_TIME = time.time()
+def replace_inputs_in_txt(file_path, input1, input2, input3, input4):
+    # Read the contents of the .txt file
+    with open(file_path, 'r') as file:
+        content = file.read()
 
-def save_memory_entry(text, memory_type, agent_index):
-    agents_folder = "agents"
-
-    # Get agent folder names
-    agent_names = sorted(
-        [name for name in os.listdir(agents_folder) if os.path.isdir(os.path.join(agents_folder, name))]
-    )
-
-    if agent_index < 0 or agent_index >= len(agent_names):
-        raise IndexError("Invalid agent index")
-
-    agent_name = agent_names[agent_index]
-    memory_path = os.path.join(agents_folder, agent_name, "memory.json")
-
-    # Calculate time since program started
-    elapsed_time = round(time.time() - SIMULATION_START_TIME, 2)
-
-    memory_entry = {
-        "type": memory_type,
-        "text": text,
-        "timestamp": elapsed_time,
-        "importance": 0
+    # Perform replacements
+    replacements = {
+        '|INPUT1|': input1,
+        '|INPUT2|': input2,
+        '|INPUT3|': input3,
+        '|INPUT4|': input4
     }
 
-    # Load and update memory.json
-    if os.path.exists(memory_path):
-        with open(memory_path, "r") as f:
-            try:
-                memory_data = json.load(f)
-            except json.JSONDecodeError:
-                memory_data = []
-    else:
-        memory_data = []
+    for key, value in replacements.items():
+        content = content.replace(key, value)
 
-    memory_data.append(memory_entry)
+    return content
 
-    with open(memory_path, "w") as f:
-        json.dump(memory_data, f, indent=2)
+def load_all_agents(base_dir='agents'):
+    agents = []
+    for name in os.listdir(base_dir):
+        agent_path = os.path.join(base_dir, name)
+        print(name)
+        if os.path.isdir(agent_path):
+            agents.append(Agent(name, base_dir))
+    return agents
 
-    print(f"Saved memory to {agent_name}/memory.json: {memory_entry}")
+
 
