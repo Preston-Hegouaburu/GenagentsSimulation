@@ -1,0 +1,1 @@
+This is a generative agent simulation leverageing deep seek, an open scource llm modle, to simulate human like agents as they work together to complete a task. The goal of this project is to explore the effects that "volume" and realistic communication in physical space has on the agents ability to complete a collaborative challenge.

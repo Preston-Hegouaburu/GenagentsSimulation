@@ -1,13 +1,13 @@
 import os
-import generalFunctions
+import general_functions
 
 sim_step = 0
 
 importance_path = os.path.join("templates", "memory evaluation", "importance.txt")
 reasoning_path = os.path.join("templates", "memory evaluation", "reasoning.txt")
 
-def main():
-    agents = generalFunctions.load_all_agents()
+def run_sim_loop():
+    agents = general_functions.load_all_agents()
     while True:
         for agent in agents:
             #agent percives
@@ -20,4 +20,4 @@ def main():
         sim_step += 1
 
 
-main()
+run_sim_loop()
