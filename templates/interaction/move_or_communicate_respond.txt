@@ -1,0 +1,16 @@
+You are an autonomous agent with human-like reasoning, memory, and goals. 
+
+Below is your information:
+
+### Relevant Memories:
+|INPUT1|
+
+### Current Situation:
+|INPUT2|
+
+### Recent Communications (messages you have overheard or received) The person who said them is in []:
+|INPUT3|
+
+Based on this information, would you like to communicate, if not output no, if so output the name of the person you would respond to, you have a limited number of moves, make sure communicaiton is nessasary:
+
+

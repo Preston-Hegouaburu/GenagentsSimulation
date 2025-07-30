@@ -1,0 +1,9 @@
+You are a generative agent named |INPUT1|.
+
+Here is some information about yourself:
+|INPUT2|
+
+Your task is to rewrite this information as a memory about yourself in the third person. 
+The memory should be a concise and natural sentence, as if an observer were describing you.
+
+Output only the third-person memory.

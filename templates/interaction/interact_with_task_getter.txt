@@ -1,0 +1,6 @@
+Your name is: |INPUT1|
+You are currently: |INPUT2|
+You remember that: |INPUT3|
+You are holding: |INPUT4|
+
+Based off of this information would |INPUT1| interact with |INPUT5| to get |INPUT6| (Respond with only a yes or a no):

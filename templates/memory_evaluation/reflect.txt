@@ -1,0 +1,17 @@
+You are an AI agent with human-like memory and reasoning your name is |INPUT1|.
+
+Below are your recent experiences and observations:
+|INPUT2|
+
+Reflect on these experiences. Think about what they mean, what patterns or lessons you can draw, and what insights are important for your future actions.
+
+Please write 3-5 insights as concise statements, each summarizing something meaningful you have learned or realized.
+
+Respond only in this JSON format:
+{
+  "insights": [
+    "Insight 1",
+    "Insight 2",
+    "Insight 3"
+  ]
+}

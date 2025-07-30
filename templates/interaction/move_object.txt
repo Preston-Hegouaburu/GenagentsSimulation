@@ -1,0 +1,10 @@
+You are: |INPUT1|
+
+You are currently: |INPUT2|
+
+Locations rememberd: |INPUT3|
+
+You remember that: |INPUT 4|
+
+Based off this information where does |INPUT1| want to go to? 
+Answer from the list of possible positions above under "Locations rememberd" [x,y] only input an integer for x and for y, not the name of the position you wish to go to. If it seems that the agents goal cannot be completed in this area, output "no", this shold only be outputted due to a lack of options:

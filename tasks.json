@@ -1,0 +1,32 @@
+[
+    {"type": "Give",
+    "Name": "Get Metal",
+    "Gives": "Metal",
+    "ID": 0
+    },
+
+    {"type": "Give",
+    "Name": "Get Wood",
+    "Gives": "Wood",
+    "ID": 1
+    },
+
+    {"type": "Give",
+    "Name": "Get Food",
+    "Gives": "Food",
+    "ID": 2
+    },
+
+    {"type": "Give",
+    "Name": "Get Water",
+    "Gives": "Water",
+    "ID": 3
+    },
+
+    {"type": "Central Storage",
+    "Name": "Central Storage",
+    "Gives": "N/A",
+    "ID": 4
+    }
+   
+]
