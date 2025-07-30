@@ -6,7 +6,7 @@ def ask(prompt: str):
     response = requests.post(
         url="https://openrouter.ai/api/v1/chat/completions",
         headers={
-            "Authorization": "Bearer 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",
+            "Authorization": "Bearer Your API Key Here",
             ##"HTTP-Referer": "<YOUR_SITE_URL>",  # Optional
             ##"X-Title": "<YOUR_SITE_NAME>",      # Optional
             "Content-Type": "application/json"
