@@ -1,10 +1,94 @@
-This is a generative agent simulation leverageing deep seek, an open scource llm modle, to simulate human like agents as they work together to complete a task.
 
-Running The project:
-Step 1: Create a python virtual environment
-Step 2: install requironments.txt (simply use pip install -r requirements.txt)
-Step 3: Go into the general_functions.py file. Under the first funciton "ask(prompt: str)" on line nine the following is displayed:  "Authorization": "Bearer Your API Key Here". Simply replace the "Your API Key Here" text with your own Open Router API Key, while leaving "Bearer."
-An important note: As the LLM model used in this simulation is free, if an Open Router API key is made, it will be able to make 50 free calls to this Deep Seek model, althoug 50 calls is not enough to run very many simulation steps, so a paymment of 10 dollars may need to be made to get the sufficent credits for 1000 API calls to this model.
-Step 4: Leave Agents as is, or alter their background. More agents can be added by simply duplicating an existing agent and changing their background information
-Step 5: Make sure that all memory.json files are empty, and well as the record.txt file. The contents of these files are not erased acutomatically and will need be be done manually. This is especially important for the memory.json files as if their contents are not only: [], then the initial memory setup will not be done correctly
-Step 6: run the "run_sim.py." You should be able to see the records of the agents actions and communicaitons comple in the record.txt file as well as in the terminal
+
+# Generative Agent Simulation using DeepSeek
+
+This project simulates human-like generative agents collaborating to complete a task. It leverages **[DeepSeek](https://deepseek.com/)** — a powerful open-source LLM — accessed via the **OpenRouter API**. Each agent is designed to emulate cognitive behaviors such as memory, communication, and reasoning.
+
+---
+
+## Getting Started
+
+Follow these steps to set up and run the simulation:
+
+### 1. Create a Virtual Environment
+
+```bash
+python3 -m venv venv
+source venv/bin/activate  # On Windows use: venv\Scripts\activate
+```
+
+### 2. Install Dependencies
+
+Install all required Python packages:
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## 3. Set Your API Key
+
+Open the file `general_functions.py`.
+
+On **line 9**, locate this line:
+
+```python
+"Authorization": "Bearer Your API Key Here"
+```
+
+Replace `"Your API Key Here"` with your own [OpenRouter](https://openrouter.ai) API key — **leave `"Bearer "` in place**.
+
+> ⚠️ **Note:**
+> The DeepSeek model is free via OpenRouter for up to **50 calls**.
+> For extended simulations (\~1000 API calls), you may need to **add \$10 in credit** to your account.
+
+---
+
+## 4. Configure the Agents
+
+* You can use the default agents or modify their backgrounds.
+* To add new agents:
+
+  1. Duplicate an existing agent file.
+  2. Modify the background information as desired.
+
+---
+
+##  5. Clear Prior State
+
+Before running the simulation:
+
+* Make sure that **all `memory.json` files** contain only:
+
+```json
+[]
+```
+
+* Clear the contents of `record.txt`.
+
+> If memory files are not reset, agents will retain old data and initialization will not work as intended.
+
+---
+
+## 6. Run the Simulation
+
+Run the simulation script:
+
+```bash
+python run_sim.py
+```
+
+You will see:
+
+* Agent actions and communication printed in the **terminal**.
+* All output also logged in `record.txt`.
+
+---
+## Notes
+
+* This is an early prototype exploring agent collaboration.
+* You can expand the simulation with new agent goals, tasks, or environments.
+* The agents currently rely on a single shared LLM (DeepSeek) for reasoning.
+
+---

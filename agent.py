@@ -27,7 +27,9 @@ class Agent:
         self.importance_trigger = self.importance_threshold
         self.num_memories_to_reflect = 0
         self.retention = 5
-
+        self.total_communications = 0
+        self.total_moves = 0
+    
     def write_to_records(self, text):
         with open(self.record_path, "a") as file:
             file.write(text + "\n")
@@ -118,15 +120,23 @@ class Agent:
 
 
     def refelctions_to_memories(self, insight_str, sim_step_manager):
+
+        insight_str = insight_str.strip()
+        if insight_str.startswith("```json"):
+            insight_str = re.sub(r"^```json\s*", "", insight_str)
+            insight_str = re.sub(r"\s*```$", "", insight_str)
+        
         try:
-            # Attempt to parse the string as JSON
             data = json.loads(insight_str)
         except json.JSONDecodeError as e:
-            raise ValueError(f"Could not parse string as JSON: {e}\nString was:\n{insight_str}")
+            print("reflection did not work")
+            return
 
         # Extract insights list
         insights = data.get("insights", [])
         
+
+
         if not isinstance(insights, list):
             raise ValueError("'insights' is not a list in the provided JSON string.")
         for item in insights:
@@ -151,15 +161,19 @@ class Agent:
             answer = general_functions.ask(general_functions.replace_inputs_in_txt(communicate_or_move_path_respond, scentence_similarity.retrieve_top_memories(self.memory_path, self.situation, sim_step_manager.get_sim_step()), self.situation, communications))
         else:
             answer = general_functions.ask(general_functions.replace_inputs_in_txt(communicate_or_move_path, scentence_similarity.retrieve_top_memories(self.memory_path, self.situation, sim_step_manager.get_sim_step()), self.situation))
-            print("In deciding to move or communicate I" + self.name +" have decided: " + answer)
-            self.write_to_records("In deciding to move or communicate I" + self.name +" have decided: " + answer)
+            print("In deciding to move or communicate I " + self.name +" have decided: " + answer)
+            self.write_to_records("In deciding to move or communicate I " + self.name +" have decided: " + answer)
         if "no" not in answer:
             print("communicating")
-            self.write_to_records("communicating")
+            self.total_communications += 1
+            self.write_to_records(self.name + " Communicating")
+            self.write_to_records(self.name + "Total communications: " + str(self.total_communications) + ", Total moves: " + str(self.total_moves))
             self.determine_communication(sim_step_manager, answer)
         else:
             print("Moving")
-            self.write_to_records("Moving")
+            self.total_moves += 1
+            self.write_to_records(self.name + " Moving")
+            self.write_to_records(self.name + "Total communications: " + str(self.total_communications) + ", Total moves: " + str(self.total_moves))
             self.determine_move(world, sim_step_manager)
 
     def determine_communication(self, sim_step_manager, communicatiee):
@@ -176,23 +190,27 @@ class Agent:
         self.write_to_records(self.name + "'s movement string: "+position_str)
         if "no" in position_str:
             print("I have decided to move areas")
-            self.write_to_records(self.name + "has decided to move areas")
+            self.write_to_records(self.name + "has decided to move to another area")
             self.move_area(world, sim_step_manager)
             return
-        position = json.loads(position_str)  # This gives [2, 3] as a Python list of ints
+        try:
+            position = json.loads(position_str)  # This gives [2, 3] as a Python list of ints
+        except:
+            return
         self.move(position[0],position[1],world)
     
     def move_area(self, world, sim_step_manager):
         move_path_object = os.path.join("templates", "interaction", "move_area.txt")
         position_str = general_functions.ask(general_functions.replace_inputs_in_txt(move_path_object, self.name, self.situation, self.get_spatial_memories_as_string, scentence_similarity.retrieve_top_memories(self.memory_path, self.situation, sim_step_manager.get_sim_step())))
         position_str = position_str.lower()
-        if "metal" in position_str:
+        self.write_to_records(self.name + "has decided to move to area: " + position_str)
+        if "upper left" in position_str:
             self.move(4, 4, world)
-        elif "wood" in position_str:
+        elif "upper right" in position_str:
             self.move(14, 4, world)
-        elif "water" in position_str:
+        elif "lower right" in position_str:
             self.move(14, 14, world)
-        elif "food" in position_str:
+        elif "lower left" in position_str:
             self.move(4, 14, world)
         elif "storage" in position_str:
             self.move(9, 9, world)
@@ -200,7 +218,11 @@ class Agent:
 
     def interact(self, num, sim_step_manager, task_system):
         if num == 5:
-            self.add_memory_entry("The central storage contents and the percentages: " + task_system.get_center_storage_string(), "observation", sim_step_manager)
+            if task_system.get_num_items_in_center_storage() == "":
+                self.add_memory_entry("No items in storage currently", "observation", sim_step_manager)
+            else:
+                self.add_memory_entry(task_system.get_num_items_in_center_storage(), "observation", sim_step_manager)
+                self.add_memory_entry("Center storage recource percentages: " + task_system.get_center_storage_string(), "observation", sim_step_manager)
             interaction_str = os.path.join("templates", "interaction", "interact_with_task_storage.txt")
             if self.holding != "None":
                 response = general_functions.ask(general_functions.replace_inputs_in_txt(interaction_str, self.name, self.situation, scentence_similarity.retrieve_top_memories(self.memory_path, self.situation, sim_step_manager.get_sim_step()), self.holding))
@@ -333,7 +355,6 @@ class Agent:
         """Observe events nearby and log them to memory."""
         descriptions = []
         saw_interactable = False
-        event_interaction = ""
         num = 0
         for dy in range(-radius, radius + 1):
             for dx in range(-radius, radius + 1):
@@ -355,6 +376,6 @@ class Agent:
                                 self.add_memory_entry(spatial_observation, "spatial observation", sim_step_manager)
         self.situation = self.name+ " is in the " + world.area_grid[self.x][self.y] + " area." +" ".join(descriptions) + " " + self.name + " is holding: " + self.holding if descriptions else "Nothing of interest nearby." 
         print(self.situation)
-        self.write_to_records(self.situation)
+        self.write_to_records(self.name + "'s situation is the following: "+self.situation)
         if saw_interactable: 
             self.interact(num, sim_step_manager, task_system)

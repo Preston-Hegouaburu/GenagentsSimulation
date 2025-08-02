@@ -1,6 +1,7 @@
 import heapq
 import csv
 import os
+
 class Tile:
     def __init__(self):
         self.events = [None, None, None, None]  # 4 event slots
@@ -39,10 +40,10 @@ class World:
     def load_areas_from_csv(self):
         mapping = {
             "0": {"Area": "Storage Area"},
-            "1": {"Area": "Meatal Gathering Area"},
-            "2": {"Area": "Wood Collecting Area"},
-            "3": {"Area": "Water Gathering Area"},
-            "4": {"Area": "Food Gathering Area"},
+            "1": {"Area": "Upper Left (rescource collection area)"},
+            "2": {"Area": "Upper Right (rescource collection area)"},
+            "3": {"Area": "Lower Right (rescource collection area)"},
+            "4": {"Area": "Lower Left (rescource collection area)"},
         }
         csv_file = os.path.join("world", "world-1-areas.csv")
         with open(csv_file, newline='') as f:
@@ -116,12 +117,15 @@ class World:
                 if self.collision_grid[y][x]:
                     row.append("#")  # Collidable block
                 elif agent_list and any(a.x == x and a.y == y for a in agent_list):
-                    row.append("A")  # Agent
+                    for a in agent_list:
+                        if a.x == x and a.y == y:
+                            name = a.name
+                    row.append(name[0].upper())  # Agent
                 elif any(self.memory_grid[y][x].events):
                     row.append("E")  # Event
                 else:
                     row.append(".")
-            record_path = os.path.join(base_dir, 'record.txt')
+            record_path = os.path.join('agents', 'record.txt')
             with open(record_path, "a") as file:
                 file.write(" ".join(row) + "\n")
             print(" ".join(row))

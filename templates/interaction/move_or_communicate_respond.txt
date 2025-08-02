@@ -11,6 +11,6 @@ Below is your information:
 ### Recent Communications (messages you have overheard or received) The person who said them is in []:
 |INPUT3|
 
-Based on this information, would you like to communicate, if not output no, if so output the name of the person you would respond to, you have a limited number of moves, make sure communicaiton is nessasary:
+Based on this information, would you like to communicate or would you like to move, if you would like to move output no, if you would like to communicate output the name of the person you would respond to, you have a limited number of total actions:
 
 

@@ -31,28 +31,34 @@ class Tasks:
         return task.get("type") if task else None
     
     def add_item_to_storage(self, item):
+        print(self.center_storage)
         self.center_storage.append(item)
 
+    def get_num_items_in_center_storage(self):
+        print(self.center_storage)
+        if len(self.center_storage) == 0:
+            return ""
+        return str(len(self.center_storage)) + " Items in Storage. Storage cannot be empty"
+
     def get_center_storage_string(self):
+        print(self.center_storage)
+        from collections import Counter
         items = self.center_storage
+        
+
+        resource_types = ["Metal", "Wood", "Water", "Food"]
         total = len(items)
+        count = Counter(items)
+
         if total == 0:
-            return "Storage is empty."
+            return "Storage is currently empty."
 
-        # Count items manually
-        counts = {}
-        for item in items:
-            if item not in counts:
-                counts[item] = 0
-            counts[item] += 1
-
-        # Build summary
-        summary_parts = []
-        for item, count in counts.items():
-            percentage = (count / total) * 100
-            summary_parts.append(f"{item}: {count} ({percentage:.1f}%)")
-
-        return ", ".join(summary_parts)
+        parts = []
+        for resource in resource_types:
+            percentage = (count[resource] / total) * 100 if total > 0 else 0
+            parts.append(f"{resource}: {round(percentage, 1)}%")
+        
+        return " ".join(parts)
     
     def get_id_by_name(self, name):
         """Find task ID by its Name (case-insensitive)."""

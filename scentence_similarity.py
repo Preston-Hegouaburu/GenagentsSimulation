@@ -23,8 +23,8 @@ def compute_relevance(current_situation: str, memory_text: str) -> float:
     memory_embedding = embed_text(memory_text)
     return cosine_similarity(situation_embedding, memory_embedding)
 
-def retrieve_top_memories(json_path, current_situation, current_step, top_n=5,
-                          w_importance=0.4, w_relevance=0.4, w_recency=0.2):
+def retrieve_top_memories(json_path, current_situation, current_step, top_n=7,
+                          w_importance=0.6, w_relevance=0.35 , w_recency=0.2):
     # Load memories from JSON
     with open(json_path, "r") as f:
         memories = json.load(f)

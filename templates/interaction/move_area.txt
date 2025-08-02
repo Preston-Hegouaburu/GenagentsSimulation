@@ -5,9 +5,11 @@ You remember: |INPUT4|
 
 |INPUT1| has decide that their current task cannot be done in their current area of |INPUT3|
 
-So out of the following areas, where does |INPUT1| want to go. Respond by simply stating the name of the area that |INPUT1| would want to go to:
-1. Metal collecting area
-2. Wood gathering area
-3. Water gathering area
-4. Food gathering area
-5. Storage area
+So out of the following areas, where does |INPUT1| want to go in order to get the appropriate recources. Respond by simply stating the name of the area that |INPUT1| would want to go to in lower case:
+Collection matirials zone options:
+    Upper Left
+    Upper Right
+    Lower Left
+    Lower Left
+
+Or the "Storage area" zone.

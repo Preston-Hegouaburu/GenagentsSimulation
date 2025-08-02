@@ -20,8 +20,8 @@ def load_all_agents(base_dir='agents'):
         agent_path = os.path.join(base_dir, name)
         print(name)
         if os.path.isdir(agent_path):
-            agents.append(Agent(name, 11+i, 9, sim_step_manager, base_dir))
-            world.add_event_to_tile(11+i, 9, name)
+            agents.append(Agent(name, 9+i, 9, sim_step_manager, base_dir))
+            world.add_event_to_tile(9+i, 9, name)
     return agents
 
 
@@ -35,7 +35,7 @@ def run_sim_loop():
     #while True:
     # current plan: I am going to make the physical part to then be able to accurately test the memory retirval by actually being able to give a situation to the agents
     # Next I am going to get movement piece working, and thenthe conversation part working from this point, that should be the majority, then only experimentation and refinement needs to be done, should be done by tommorrow
-    for i in range(20):
+    for i in range(70):
         for agent in agents:
             agent.observe_surroundings(world, sim_step_manager, tasks)
             agent.evaluate_importance()
@@ -49,5 +49,10 @@ def run_sim_loop():
             #agent.add_memory_entry("Saw a bird fly by.", "observation", sim_step)# Add a memory entry for the first agent
         sim_step_manager.increment_sim_step()
         world.display(agents)
+        record_path = os.path.join('agents', 'record.txt')
+        with open(record_path, "a") as file:
+            file.write(tasks.get_num_items_in_center_storage() + "\n")
+            file.write(tasks.get_center_storage_string() + "\n")
+            file.write("\n" + "\n" + "The new sim step is: " + str(sim_step_manager.get_sim_step()) + "\n" + "\n")
 
 run_sim_loop()

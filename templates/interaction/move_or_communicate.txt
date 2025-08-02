@@ -8,6 +8,5 @@ Below is your information:
 ### Current Situation:
 |INPUT2|
 
-Based on this information if you would like to move simply output no and nothing else, if instead you would like to communicate, then output the name of the peron you would like your communication directed a tand nothing else:
-
+Based on this information, would you like to communicate or would you like to move, if you would like to move output no, if you would like to communicate output the name of the person you would respond to, you have a limited number of moves, make sure communicaiton is absolutely nessasary, consider movement as more important:
 
